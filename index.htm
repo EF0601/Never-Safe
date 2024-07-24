@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="alert" id="mainAlert">
+        <span class="closeBtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong id="alertLevel">Hint!</strong> <span id="alertMessage">Press ESC to pause, where there is a startup guide! Pause is also in the Misc column.</span>
+    </div>
+    <div class="threeBars">
+        <div class="bar">
+            <h2>Contracts</h2>
+            <p>Accept a contract to hack for the contractor.</p>
+            <div id="contractsDisplay">
+                <div class="contract" id="contract0" style="display: none;">
+                    <div class="box">
+                        <h3>Contract 0</h3>
+                        <p id="contract0contractor">(Edge Technologies)</p>
+                        Difficulty: <span id="contract0difficulty">1</span>
+                        Money: <span id="contract0cash">100</span>
+                        Reputation: <span id="contract0rep">10</span>
+                    </div>
+                    <button onclick="acceptContract('4','100:;10:;contract1')" id="acceptContract">Accept</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="bar">
+            <h2>Decryption terminal</h2>
+            <p>View the results below in the first row, then copy that into the second row. You must remember this to unlock the lock for the contract.</p>
+            <div id="unlockCode">CODE: <span id="unlockCodeDisplay">-</span></div>
+            <div id="keypad">
+                <div id="inputCode">OUT: <input id="inputCodeDisplay" type="text" value="-" disabled></div>
+                <div id="keypadRow1">
+                    <button onclick="keypad('A')">A</button>
+                    <button onclick="keypad('B')">B</button>
+                    <button onclick="keypad('C')">C</button>
+                </div>
+                <div id="keypadRow1">
+                    <button onclick="keypad('X')">X</button>
+                    <button onclick="keypad('Y')">Y</button>
+                    <button onclick="keypad('Z')">Z</button>
+                </div>
+                <div id="keypadRow2">
+                    <button onclick="keypad('1')">1</button>
+                    <button onclick="keypad('2')">2</button>
+                    <button onclick="keypad('3')">3</button>
+                </div>
+                <div id="keypadRow3">
+                    <button onclick="keypad('4')">4</button>
+                    <button onclick="keypad('5')">5</button>
+                    <button onclick="keypad('6')">6</button>
+                </div>
+                <div id="keypadRow4">
+                    <button onclick="keypad('7')">7</button>
+                    <button onclick="keypad('8')">8</button>
+                    <button onclick="keypad('9')">9</button>
+                </div>
+                <div id="keypadRow5">
+                    <button onclick="keypad('0')">0</button>
+                    <button onclick="keypad('E')">Ent</button>
+                    <button onclick="keypad('D')">Del</button>
+                </div>
+            </div>
+        </div>
+        <div class="bar">
+            <h2>miscellaneous</h2>
+            <button onclick="pauseToggle()" class="pauseButtons">PAUSE</button>
+            <div id="time">
+                <h3>Day <span id="day"></span>; <span id="timeH"></span>:<span id="timeM">0</span>0</h3>
+            </div>
+            <h3>Wallet</h3>
+            <div id="wallet">
+                Money: <span id="cash">0</span>
+                BYTECoin: <span id="bytecoin">0</span>
+                CatCoin: <span id="catcoin">0</span>
+            </div>
+            <h3>Essentials</h3>
+            <div id="essentials">
+                Food: <span id="food">20</span>
+                Water: <span id="water">40</span>
+            </div>
+            <h3>Assistant</h3>
+            <i id="assistantMK1Ad">Buy Assistant MK1 to unlock.</i>
+            <div id="assistantMK1">
+                <button class="pauseButtons" style="font-size: 16px;" onclick="toggleAssistant()" disabled id="assistantToggleButton">Toggle assistant</button>
+            </div>
+            <i id="assistantMK2Ad">Buy Assistant MK2 to unlock.</i>
+            <div id="assistantMK2" style="display: grid; grid-template-columns: 50% 50%;">
+                <input type="text" id="assistantFoodInput" placeholder="Food: Number; 1 -> 10000" disabled>
+                <input type="text" id="assistantWaterInput" placeholder="Water: Number; 1 -> 10000" disabled>
+            </div>
+
+            <div id="commandLine">
+                <input type="text" placeholder="Type a command. For help, type Help''" id="commandInput"> <button onclick="commandLineEnter()">Enter</button>
+                <div id="commandOutput">
+                    <div class="output" id="output1">
+                        <p>Welcome to your command line! First time? type: Help'' Need food or water? type: shop''</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<div id="pauseModal" class="modal">
+    <div class="modal-content">
+        <div id="doubleBar" style="display: grid; grid-template-columns: 50% 50%">
+            <div class="box">
+                <h2 class="modal-title">Paused</h2>
+                <p>Don't worry, your game is paused and behind this screen. When you click resume, it will be there.</p>
+                <button onclick="pauseToggle()" class="pauseButtons">Resume</button>
+                <button onclick="document.getElementById('menuModal').style.display = 'block';
+                                tickTrue = false; document.getElementById('pauseModal').style.display = 'none';"
+                    class="pauseButtons">Menu</button>
+                <button onclick="" class="pauseButtons">Wiki</button>
+            </div>
+            <div class="box" style="margin-left: 10px;">
+                <h3>Startup Basics</h3>
+                <iframe width="100%" height="100%" src="./StartupBasics.html"></iframe>
+            </div>
+        </div>
+        <i>EF0601 Studios. Pre-alpha 7/17/2024</i>
+    </div>
+</div>
+<div id="menuModal" class="modal">
+    <div class="modal-content">
+        <h2 class="modal-title">Never Safe</h2>
+        <p>Nowhere... safe. The year is 3039. You'll never be safe in this world. It's either fend for yourself or join a clan.</p>
+        <button onclick="initiateCharacterSelect()" class="pauseButtons">Begin</button>
+        <button onclick="pauseToggle();" class="pauseButtons">Resume</button>
+        <button onclick="" class="pauseButtons">Wiki</button>
+        <i>EF0601 Studios. Pre-alpha 7/17/2024</i>
+    </div>
+</div>
+<div id="charSelectModal" class="modal">
+    <div class="modal-content">
+        <h2 class="modal-title">Character Select</h2>
+        <div class="threeBars">
+            <div class="bar">
+                <h3><span class="character1"></span></h3>
+                <p>Born into a rich family with connections, <span class="character1"></span> starts with more reputation than the other characters. He also starts with more money. However, his power gets to his head and earns 70% of what is usually earned.</p>
+                <button onclick="selectCharacter(1)" class="pauseButtons">Select</button>
+            </div>
+            <div class="bar">
+                <h3><span class="character2"></span></h3>
+                <p>Just a middle class. <span class="character2"></span> is your jack of all trades master of none type of person. Start with nothing but earns 110% of what is usually earned.</p>
+                <button onclick="selectCharacter(2)" class="pauseButtons">Select</button>
+            </div>
+            <div class="bar">
+                <h3><span class="character3"></span></h3>
+                <p>A hardened character from the street, someone <span class="character3"></span> got a hold of this laptop. An intern, <span class="character3"></span> is respected by no one and starts with -100 rep. Being a hard worker earns him 170% of what is usually earned.</p>
+                <button onclick="selectCharacter(3)" class="pauseButtons">Select</button>
+            </div>
+        </div>
+        <i>EF0601 Studios. Pre-alpha 7/17/2024</i>
+    </div>
+</div>
+<div id="upgradeModal" class="modal">
+    <div class="modal-content">
+        <h2 class="modal-title">Upgrade menu</h2>
+        <p id="upgradeCloseButton">Close</p>
+        <div class="threeBars">
+            <div class="bar">
+                <h3>Basic upgrades</h3>
+                <div id="basicUpgrades">
+                    <div class="upgrade" id="upgrade0" style="display: none;">
+                        <div class="box">
+                            <h3><span id="upgradeTitle">Upgrade 0</span> MK <span id="upgradeLevel"></span></h3>
+                            <p id="upgradeDescription">This is an upgrade</p>
+                            Cost: <span id="upgradeCost">100</span>
+                        </div>
+                        <button onclick="buyUpgrade('')" id="upgradeButton" class="pauseButtons">Buy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bar">
+                <h3>Faction upgrades</h3>
+                <div id="factionUpgrades">
+                    <div class="upgrade" id="factionUpgrade0" style="display: none;">
+                        <div class="box">
+                            <h3><span id="upgradeTitle">Upgrade 0</span> MK <span id="upgradeLevel"></span></h3>
+                            <p id="upgradeDescription">This is an upgrade</p>
+                            Cost: <span id="upgradeCost">100</span>
+                        </div>
+                        <button onclick="buyUpgrade('')" id="upgradeButton" class="pauseButtons">Buy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bar">
+                <h3>Special upgrades</h3>
+                <div id="specialUpgrades">
+                    <div class="upgrade" id="specialUpgrade0" style="display: none;">
+                        <div class="box">
+                            <h3><span id="upgradeTitle">Upgrade 0</span> MK <span id="upgradeLevel"></span></h3>
+                            <p id="upgradeDescription">This is an upgrade</p>
+                            Cost: <span id="upgradeCost">100</span>
+                        </div>
+                        <button onclick="buyUpgrade('')" id="upgradeButton" class="pauseButtons">Buy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="callTab" class="sideTab">
+    <h3 id="callOrReceive">Calling...</h3>
+    <h3 id="caller">Stephanie</h3>
+    <div id="callOutput">
+        <div class="output" id="callOutput0">
+            <p>Call started.</p>
+        </div>
+        <div class="output" id="callOutput1">
+            <p>*In a bored voice* you alive?</p>
+        </div>
+        <div class="output" id="callOutput2">
+            <p>Oh good, you ARE awake. I was half expecting for you to be another half dead novice.</p>
+        </div>
+    </div>
+    <button>Accept call</button>
+</div>
+
+</html>
+<script src="./script.js"></script>
